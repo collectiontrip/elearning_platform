@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Course, Lesson, Enrollment, Certification
+from .models import User, Course, Lesson, Enrollment, Certification, Item
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -17,6 +17,9 @@ class UserSerializer(serializers.ModelSerializer):
             role=validated_data.get('role', 'student')
         )
         return user
+    def update(self, instance, validated_data):
+        validated_data.pop('instructor', None)
+        return super().update(instance, validated_data)
        
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -49,3 +52,7 @@ class CertificationSerializer(serializers.ModelSerializer):
         model = Certification  
         fields = ['id', 'user', 'title', 'description', 'issued_at']     
    
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = '__all__'

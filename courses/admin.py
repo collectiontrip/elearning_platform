@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Course, Lesson, Enrollment, Quiz, Question, Enrollment, Certification
+from .models import User, Course, Lesson, Enrollment, Quiz, Question, Enrollment, Certification, Item
 
 
 @admin.register(User)
@@ -13,3 +13,4 @@ admin.site.register(Enrollment)
 admin.site.register(Quiz)
 admin.site.register(Question)
 admin.site.register(Certification)
+admin.site.register(Item)

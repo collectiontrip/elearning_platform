@@ -3,14 +3,15 @@ from django.utils.timezone import now
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework import generics
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
-from .models import User, Course, Lesson, Enrollment, Certification, OTP
+from .models import User, Course, Lesson, Enrollment, Certification, OTP, Item
 from .permissions import IsStudent, IsInstructorOrAdmin
-from .serializers import UserSerializer, CourseSerializer, LessonSerialiZer, EnrollmentSerializer, CertificationSerializer
+from .serializers import UserSerializer, CourseSerializer, LessonSerialiZer, EnrollmentSerializer, CertificationSerializer, ItemSerializer
 from .utils import generate_otp, send_otp_email
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
@@ -59,7 +60,7 @@ class LoginView(APIView):
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [IsAuthenticated, IsInstructorOrAdmin]
+    
     
     def get_serializer_context(self):
         return {'request': self.request}
@@ -99,3 +100,9 @@ class CertificationViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
+    
+    
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+    

@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'courses',
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +56,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'
+]
+CORS_ALLOW_CREDENTIALS = True
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSESS': (
@@ -150,5 +158,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'u50100073@gmail.com'
 EMAIL_HOST_PASSWORD = 'Ravidoc1@1'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 
