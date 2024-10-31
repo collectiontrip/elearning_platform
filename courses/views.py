@@ -9,9 +9,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
-from .models import User, Course, Lesson, Enrollment, Certification, OTP, Item
+from .models import User, Course,  Enrollment, Certification, OTP, Item, Content
 from .permissions import IsStudent, IsInstructorOrAdmin
-from .serializers import UserSerializer, CourseSerializer, LessonSerialiZer, EnrollmentSerializer, CertificationSerializer, ItemSerializer
+from .serializers import UserSerializer, CourseSerializer,  EnrollmentSerializer, CertificationSerializer, ItemSerializer, ContentSerializer
 from .utils import generate_otp, send_otp_email
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
@@ -66,11 +66,9 @@ class CourseViewSet(viewsets.ModelViewSet):
         return {'request': self.request}
     
 
-class LessonViewSet(viewsets.ModelViewSet):
-    queryset = Lesson.objects.all()
-    serializer_class = LessonSerialiZer
-    
-    
+class ContentViewSet(viewsets.ModelViewSet):
+    queryset = Content.objects.all()
+    serializer_class = ContentSerializer 
 
     
     

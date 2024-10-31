@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, Course, Lesson, Quiz, Question, Enrollment, Certification, OTP, Item
+from .models import User, Course,  Quiz, Question, Enrollment, Certification, OTP, Item, Content
 
 
 @admin.register(User)
@@ -17,10 +17,10 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('role', 'is_staff', 'is_active')
     search_fields =  ('username', 'email', 'first_name', 'last_name')
     
-    
-class LessonInline(admin.TabularInline):
-    model = Lesson
-    extra = 1
+class ContentInline(admin.TabularInline):
+    model = Content
+    extra = 1    
+
     
 class QuizInline(admin.TabularInline):
     model = Quiz
@@ -32,9 +32,14 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ('title', 'instructor', 'price', 'created_at')
     list_filter = ('instructor', 'created_at')
     search_fields = ('title', 'description', 'instructor__username')
-    inlines = [LessonInline, QuizInline]
+    inlines = [ QuizInline, ContentInline]
     
-    
+@admin.register(Content)
+class ContentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'course', 'type', 'created_at')
+    list_filter = ('type', 'course')
+    search_fields = ('title',)
+       
 @admin.register(Enrollment)
 class EnrollMentAdmin(admin.ModelAdmin):
     list_display = ('student', 'course', 'enrolled_at')

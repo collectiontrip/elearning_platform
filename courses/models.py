@@ -48,17 +48,30 @@ class Course(models.Model):
     def __str__(self):
         return self.title
     
+
+class Content(models.Model):
+    CONTENT_TYPE_CHOICES_VIDEO = 'V'
+    CONTENT_TYPE_CHOICES_ARTICLE = 'A'
+    CONTENT_TYPE_CHOICES = (
+        (CONTENT_TYPE_CHOICES_VIDEO, 'Video'),
+        (CONTENT_TYPE_CHOICES_ARTICLE, 'Article'),    
+    )
     
-class Lesson(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='contents')
+    type = models.CharField(max_length=1, choices=CONTENT_TYPE_CHOICES)
     title = models.CharField(max_length=255)
-    video_url = models.URLField()
+    video_url = models.URLField(blank=True, null=True)
+    article_text = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.title} -{self.course.title}"
+        return f"{self.title} ({self.get_type_display()}) for {self.course.title}"
+        
+
     
     
+    
+
 
 class Quiz(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='quizzes')

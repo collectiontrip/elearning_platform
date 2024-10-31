@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Course, Lesson, Enrollment, Certification, Item
+from .models import User, Course,  Enrollment, Certification, Item, Content
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -34,14 +34,12 @@ class CourseSerializer(serializers.ModelSerializer):
         validated_data['instructor'] = request.user
         return super().create(validated_data)
         
-        
-class LessonSerialiZer(serializers.ModelSerializer):
+class ContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Content  
+        fields = '__all__'
+           
     
-     class Meta:
-         model = Lesson
-         fields = ['id', 'course', 'title', 'video_url', 'created_at']  
-         
-         
 class EnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enrollment
