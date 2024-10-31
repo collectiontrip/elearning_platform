@@ -1,12 +1,14 @@
 import React , { useEffect, useState } from 'react';
-import axios from 'axios';
 import CourseList from './components/courseList';
+import Register from './components/Auth/Register';
 
 
 const App = () => {
   return(
     <div>
-      <CourseList />
+      <h1>Welcome to the E-learning Platform</h1>
+      <Register/>
+      <CourseList/>
     </div>
   );
 };
