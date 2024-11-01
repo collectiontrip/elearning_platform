@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from .models import User, Course,  Enrollment, Certification, OTP, Item, Content
 from .permissions import IsStudent, IsInstructorOrAdmin
@@ -46,7 +47,14 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
         
         if user:
-            return Response({"message": "Login successfull!"}, status=status.HTTP_200_OK)
+            refresh = RefreshToken.for_user(user)
+            access = refresh.access_token
+            
+            return Response({
+                "message": "Login successfull!",
+                "access": str(access),
+                "refresh": str(refresh)
+                }, status=status.HTTP_200_OK)
             
                 
         return Response(

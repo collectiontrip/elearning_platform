@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { getCourses } from '../services/courseService';
+import { Link} from 'react-router-dom';
 
 
 const CourseList = () => {
+    
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -31,7 +33,9 @@ const CourseList = () => {
             <ul>
                 {courses.map(course =>(
                     <li key={course.id}>
-                    <h2>{course.title}</h2>
+                    <Link to={`/courses/${course.id}`}>
+                        <h2>{course.title}</h2>
+                    </Link>
                     <p>{course.description}</p>
                     <p>Price: ${course.price}</p>
                 </li>

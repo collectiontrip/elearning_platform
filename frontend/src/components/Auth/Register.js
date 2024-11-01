@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Register = () => {
     const [username, setUsername ] = useState('');
@@ -79,6 +80,10 @@ const Register = () => {
         </form>
         {message && <p> {message} </p>}
         {error && <p style={{color: 'red'}}>{error}</p> }
+
+        <p>
+                Already have an account? <Link to="/login">Login here</Link>
+            </p>
         </div>
     );
 };
